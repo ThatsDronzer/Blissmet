@@ -16,7 +16,64 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-const navItems = [
+// Define types for our data structures
+type NavItem = {
+  href: string;
+  icon: React.ComponentType<any>;
+  label: string;
+}
+
+type Vendor = {
+  id: number;
+  name: string;
+  category: string;
+  location: string;
+  price: string;
+  rating: number;
+  image: string;
+}
+
+type Message = {
+  id: number;
+  sender: string;
+  message: string;
+  time: string;
+  unread: boolean;
+}
+
+type Review = {
+  id: number;
+  vendor: string;
+  event: string;
+  date: string;
+  rating: number | null;
+}
+
+type Payment = {
+  id: number;
+  vendor: string;
+  amount: string;
+  status: string;
+  date: string;
+}
+
+type Task = {
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
+type UserData = {
+  name?: string;
+  email?: string;
+  events?: any[];
+  unreadMessages?: number;
+  wishlist?: any[];
+  pendingPayments?: number;
+  tasks?: Task[];
+}
+
+const navItems: NavItem[] = [
   { href: "/dashboard/customer", icon: Heart, label: "Dashboard" },
   { href: "/dashboard/customer/bookings", icon: Calendar, label: "My Bookings" },
   { href: "/dashboard/customer/messages", icon: MessageSquare, label: "Messages" },
@@ -25,7 +82,7 @@ const navItems = [
 ]
 
 // Status badge colors
-const getStatusColor = (status) => {
+const getStatusColor = (status: string | undefined): string => {
   switch(status?.toLowerCase()) {
     case 'confirmed': return 'bg-[#4CAF50] text-white';
     case 'pending': return 'bg-[#FF9800] text-white';
@@ -35,30 +92,30 @@ const getStatusColor = (status) => {
 };
 
 // Sample data for demo purposes
-const sampleVendors = [
+const sampleVendors: Vendor[] = [
   { id: 1, name: "Taj Banquet Hall", category: "Venue", location: "South Delhi", price: "₹₹₹", rating: 4.8, image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=200" },
   { id: 2, name: "Spice Route Caterers", category: "Caterer", location: "Gurgaon", price: "₹₹", rating: 4.7, image: "https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=200" },
   { id: 3, name: "Memorable Moments Photography", category: "Photographer", location: "Noida", price: "₹₹₹", rating: 4.9, image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=200" },
 ];
 
-const sampleMessages = [
+const sampleMessages: Message[] = [
   { id: 1, sender: "Taj Banquet Hall", message: "Namaste! We have availability for your sangeet ceremony on the requested date.", time: "10:30 AM", unread: true },
   { id: 2, sender: "Spice Route Caterers", message: "We've sent the updated menu options with vegetarian and non-vegetarian choices as requested.", time: "Yesterday", unread: false },
 ];
 
-const sampleReviews = [
+const sampleReviews: Review[] = [
   { id: 1, vendor: "Royal Decorators", event: "Wedding", date: "Oct 15, 2023", rating: null },
   { id: 2, vendor: "Dhol Baaje Entertainment", event: "Sangeet Night", date: "Nov 5, 2023", rating: null },
 ];
 
-const samplePayments = [
+const samplePayments: Payment[] = [
   { id: 1, vendor: "Taj Banquet Hall", amount: "₹1,85,000", status: "Paid", date: "Oct 1, 2023" },
   { id: 2, vendor: "Spice Route Caterers", amount: "₹75,000", status: "Pending", date: "Nov 15, 2023" },
 ];
 
 export default function CustomerDashboard() {
-  const [userData, setUserData] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [userData, setUserData] = useState<UserData | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
   const router = useRouter()
 
   useEffect(() => {
@@ -159,29 +216,26 @@ export default function CustomerDashboard() {
             title="Upcoming Events" 
             value={userData?.events?.length || 2} 
             icon={Calendar} 
-            trend="+1 this week"
-            className="bg-white shadow-sm hover:shadow-md transition-shadow"
+          
           />
           <StatCard 
             title="Unread Messages" 
             value={userData?.unreadMessages || 3} 
             icon={MessageSquare} 
-            trend="2 new today"
-            className="bg-white shadow-sm hover:shadow-md transition-shadow"
+          
           />
           <StatCard 
             title="Saved Vendors" 
             value={userData?.wishlist?.length || 5} 
             icon={Heart} 
-            trend=""
-            className="bg-white shadow-sm hover:shadow-md transition-shadow"
+            
           />
           <StatCard 
             title="Pending Payments" 
             value={userData?.pendingPayments || 1} 
             icon={DollarSign} 
-            trend="₹75,000"
-            className="bg-white shadow-sm hover:shadow-md transition-shadow"
+            
+            
           />
         </div>
 
@@ -222,7 +276,7 @@ export default function CustomerDashboard() {
                           <span>Planning progress</span>
                           <span>75%</span>
                         </div>
-                        <Progress value={75} className="h-2 bg-gray-100" indicatorClassName="bg-gradient-to-r from-[#5A189A] to-[#9D4EDD]" />
+                        <Progress value={75} className="h-2 bg-gray-100"  />
                       </div>
                       
                       <div className="mt-4 flex gap-2">
@@ -259,7 +313,7 @@ export default function CustomerDashboard() {
                           <span>Planning progress</span>
                           <span>40%</span>
                         </div>
-                        <Progress value={40} className="h-2 bg-gray-100" indicatorClassName="bg-gradient-to-r from-[#5A189A] to-[#9D4EDD]" />
+                        <Progress value={40} className="h-2 bg-gray-100"  />
                       </div>
                       
                       <div className="mt-4 flex gap-2">

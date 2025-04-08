@@ -58,7 +58,7 @@
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.454.0",
     "mongoose": "^8.9.7",
-    "next": "14.2.16",
+    "next": "^15.2.4",
     "next-themes": "latest",
     "react": "^18",
     "react-day-picker": "8.10.1",
@@ -76,6 +76,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/next": "^8.0.7",
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",
