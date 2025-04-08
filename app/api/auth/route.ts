@@ -4,9 +4,8 @@ import { connectToDatabase } from "@/lib/db"
 import User from "@/models/Users"
 
 const JWT_SECRET = process.env.NEXT_PUBLIC_JWT_SECRET || "your_jwt_secret"
-export const config = {
-  runtime: "nodejs", // Specify the Node.js runtime
-}
+export const runtime = 'nodejs';
+
 export async function POST(req: NextRequest) {
   try {
     const { email, uid } = await req.json()
